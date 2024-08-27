@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import Link from 'next/link';
-// import styles from './Notes.module.css';
+import styles from './Notes.module.css';
 // import CreateNote from './Create';
 
 // export const dynamic = 'auto',
@@ -31,12 +31,11 @@ export default async function NotesPage() {
   return(
     <div>
       <h1>Notes</h1>
-      <div>
+      <div className={styles.grid}>
         {notes?.map((note) => {
             console.log(note)
           return (
             <>
-            <h2>{note.name}</h2>
             <Note key={note.id} note={note} />
             </>
           );
@@ -53,7 +52,7 @@ function Note({ note }: any) {
 
   return (
     <Link href={`/notes/${id}`}>
-      <div>
+      <div className={styles.note}>
         <h2>{title}</h2>
         <h5>{content}</h5>
         <p>{created}</p>
