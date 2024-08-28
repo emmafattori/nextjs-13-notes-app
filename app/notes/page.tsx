@@ -3,41 +3,35 @@ import Link from 'next/link';
 import styles from './Notes.module.css';
 // import CreateNote from './Create';
 
-// export const dynamic = 'auto',
-//   dynamicParams = true,
-//   revalidate = 0,
-//   fetchCache = 'auto',
-//   runtime = 'nodejs',
-//   preferredRegion = 'auto'
-
-const pb = new PocketBase('http://127.0.0.1:8090');
+export const dynamic = 'auto',
+  dynamicParams = true,
+  revalidate = 0,
+  fetchCache = 'auto',
+  runtime = 'nodejs',
+  preferredRegion = 'auto'
 
 
 async function getNotes() {
-    pb.autoCancellation(false)
 const db = new PocketBase('http://127.0.0.1:8090');
+const data = await db.collection('notes').getList();
 
 //   const result = await db.rec
-  const res = await fetch('http://127.0.0.1:8090/api/collections/notes/records?page=1&perPage=30', { cache: 'no-store' });
-  const data = await res.json();
+//   const res = await fetch('http://127.0.0.1:8090/api/collections/notes/records?page=1&perPage=30', { cache: 'no-store' });
+//   const data = await res.json();
   return data?.items as any[];
 }
 
 export default async function NotesPage() {
-    console.log('it worked')
+
   const notes = await getNotes();
-  console.log(notes, 'notes')
 
   return(
     <div>
       <h1>Notes</h1>
       <div className={styles.grid}>
         {notes?.map((note) => {
-            console.log(note)
           return (
-            <>
             <Note key={note.id} note={note} />
-            </>
           );
         })}
       </div>
@@ -48,12 +42,12 @@ export default async function NotesPage() {
 }
 
 function Note({ note }: any) {
-  const { id, title, content, created } = note || {};
-
+  const { id, name, content, created } = note || {};
+    console.log(note)
   return (
-    <Link href={`/notes/${id}`}>
+    <Link href={`/notes/${id}`} key={`note-${id}`}>
       <div className={styles.note}>
-        <h2>{title}</h2>
+        <h2>{name}</h2>
         <h5>{content}</h5>
         <p>{created}</p>
       </div>
