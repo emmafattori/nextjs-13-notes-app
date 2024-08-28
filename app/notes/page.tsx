@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 import Link from 'next/link';
 import styles from './Notes.module.css';
-// import CreateNote from './Create';
+import { CreateNote } from './CreateNote';
 
 export const dynamic = 'auto',
   dynamicParams = true,
@@ -36,7 +36,7 @@ export default async function NotesPage() {
         })}
       </div>
 
-      {/* <CreateNote /> */}
+      <CreateNote />
     </div>
   );
 }
